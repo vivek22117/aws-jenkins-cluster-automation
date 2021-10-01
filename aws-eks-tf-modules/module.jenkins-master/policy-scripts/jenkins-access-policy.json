@@ -172,8 +172,7 @@
         "s3:Delete*"
       ],
       "Resource": [
-        "arn:aws:s3:::doubledigit-*",
-        "arn:aws:s3:::doubledigit-*/*"
+        "*"
       ]
     },
     {
