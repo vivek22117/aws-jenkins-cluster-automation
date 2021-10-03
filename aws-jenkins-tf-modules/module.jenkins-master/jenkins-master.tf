@@ -65,7 +65,7 @@ resource "aws_launch_template" "jenkins_master_lt" {
 resource "aws_autoscaling_group" "jenkins_master_asg" {
   depends_on = [aws_alb.jenkins_alb]
 
-  name_prefix         = "${var.component_name}-jenkins-master-asg-${var.environment}"
+  name_prefix         = "${var.component_name}-asg-${var.environment}"
 
   vpc_zone_identifier  = data.terraform_remote_state.vpc.outputs.private_subnets
 
