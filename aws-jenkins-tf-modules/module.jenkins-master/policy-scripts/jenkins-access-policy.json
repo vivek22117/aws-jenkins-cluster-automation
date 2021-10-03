@@ -9,7 +9,7 @@
       ],
       "Condition": {
         "StringEquals": {
-          "elasticmapreduce:ResourceTag/component": "dd-*"
+          "elasticmapreduce:ResourceTag/Component": "Learning-*"
         }
       }
     },
@@ -28,8 +28,8 @@
       "Resource": "*",
       "Condition": {
         "StringEquals": {
-          "rds:db-tag/component": "dd-*",
-          "aws:PrincipalTag/CostCenter": "DoubleDigit"
+          "rds:db-tag/Component": "Learning-*",
+          "aws:PrincipalTag/CostCenter": "LearningTF"
         }
       }
     },
@@ -70,7 +70,7 @@
     "Resource": "*",
     "Condition": {
       "StringEquals": {
-        "elasticmapreduce:ResourceTag/component": "dd-*"
+        "elasticmapreduce:ResourceTag/Component": "Learning-*"
       }
     }
   },
@@ -109,7 +109,7 @@
       "Effect": "Allow",
       "Action": "cloudformation:*",
       "Resource": [
-        "arn:aws:cloudformation:${aws_region}:${account_id}:stack/dd-*"
+        "arn:aws:cloudformation:${aws_region}:${account_id}:stack/learning-*"
       ]
     },
     {
@@ -125,7 +125,7 @@
       "Resource": "*",
       "Condition": {
         "StringEquals": {
-          "elasticmapreduce:ResourceTag/component": "ddsolutions"
+          "elasticmapreduce:ResourceTag/Component": "Learning-*"
         }
       }
     },
@@ -266,7 +266,7 @@
       "Effect": "Allow",
       "Condition": {
         "StringEquals": {
-          "elasticmapreduce:ResourceTag/component": "dd-*"
+          "elasticmapreduce:ResourceTag/Component": "Learning-*"
         }
       }
     },
