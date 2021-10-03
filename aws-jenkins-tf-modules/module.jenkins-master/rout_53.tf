@@ -6,8 +6,8 @@ resource "aws_route53_record" "jenkins_record" {
   type    = "A"
 
   alias {
-    name                   = aws_lb.jenkins_alb.dns_name
-    zone_id                = aws_lb.jenkins_alb.zone_id
+    name                   = aws_alb.jenkins_alb.dns_name
+    zone_id                = aws_alb.jenkins_alb.zone_id
     evaluate_target_health = false
   }
 }

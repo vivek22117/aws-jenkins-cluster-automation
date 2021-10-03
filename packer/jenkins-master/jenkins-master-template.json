@@ -28,7 +28,7 @@
         "CreationDate": "{{isotime `2006-01-02`}}",
         "Tool" : "Packer",
         "Author" : "vivek",
-        "Name": "Jenkins-Master-2.X",
+        "Name": "Jenkins-Master-2.x",
         "Project": "LearningTF"
       }
     }

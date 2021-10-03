@@ -1,4 +1,4 @@
-// Security Group for Jenkins Master
+#####========================== Security Group for Jenkins Master ===========================#####
 resource "aws_security_group" "jenkins_master_sg" {
   name        = "jenkins-master-sg"
   description = "Allow traffic from port 8080 and enable SSH"
@@ -35,7 +35,7 @@ resource "aws_security_group_rule" "master_outbound_rule" {
 }
 
 
-// Security Group for Elastic Load Balancer
+#####========================== Security Group for Elastic Load Balancer ===========================#####
 resource "aws_security_group" "lb_sg" {
   name        = "jenkins-lb-sg"
   description = "load balancer security group"
@@ -62,11 +62,11 @@ resource "aws_security_group_rule" "allow_outbound_traffic_lb" {
   security_group_id = aws_security_group.lb_sg.id
 }
 
-/*resource "aws_security_group_rule" "allow_https" {
+resource "aws_security_group_rule" "allow_https" {
   type              = "ingress"
   from_port         = 443
   to_port           = 443
   protocol          = "tcp"
-  security_group_id = "${aws_security_group.lb_sg.id}"
+  security_group_id = aws_security_group.lb_sg.id
   cidr_blocks       = ["0.0.0.0/0"]
-}*/
+}
