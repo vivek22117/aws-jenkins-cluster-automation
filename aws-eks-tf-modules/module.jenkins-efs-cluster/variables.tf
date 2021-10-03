@@ -34,6 +34,7 @@ variable "efs_lifecycle" {
   type        = string
   description = "Lifecycle to transition data to IA, valid values AFTER_7_DAYS | AFTER_14_DAYS | AFTER_30_DAYS | AFTER_60_DAYS | AFTER_90_DAYS"
 }
+
 ####============Local variables============#####
 locals {
   common_tags = {
