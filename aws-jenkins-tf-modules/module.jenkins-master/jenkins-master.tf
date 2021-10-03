@@ -102,17 +102,16 @@ resource "aws_autoscaling_group" "jenkins_master_asg" {
       on_demand_base_capacity                  = 0
       on_demand_percentage_above_base_capacity = 0
       spot_allocation_strategy                 = "capacity-optimized"
-      spot_max_price                           = module.spot-price.spot_price_current_max
-      #spot_max_price                           = module.spot-price.spot_price_current_optimal
-      #spot_max_price                           = module.spot-price.spot_price_current_min
+      spot_max_price                           = local.spot_price_current_max
+      #spot_max_price                           = local.spot_price_current_min_mod
+      #spot_max_price                           = local.spot_price_current_optimal
     }
   }
 
   instance_refresh {
     strategy = "Rolling"
     preferences {
-      instance_warmup        = 0 #demo only, 120
-      min_healthy_percentage = 0 #demo only, 90
+      min_healthy_percentage = 50 #demo only, 90
     }
   }
 
