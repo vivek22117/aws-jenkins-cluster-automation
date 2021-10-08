@@ -16,9 +16,9 @@ resource "aws_launch_template" "jenkins_master_lt" {
   name_prefix = "${var.component_name}-lt-${var.environment}"
 
   update_default_version = true
-  image_id      = data.aws_ami.jenkins-master-ami.id
-  instance_type = local.instance_types[0]
-  key_name      = aws_key_pair.ssh_key.key_name
+  image_id               = data.aws_ami.jenkins-master-ami.id
+  instance_type          = local.instance_types[0]
+  key_name               = aws_key_pair.ssh_key.key_name
 
   user_data = base64encode(data.template_file.script.rendered)
 
@@ -31,8 +31,8 @@ resource "aws_launch_template" "jenkins_master_lt" {
   network_interfaces {
     device_index                = 0
     associate_public_ip_address = false
-    security_groups = [aws_security_group.jenkins_master_sg.id]
-    delete_on_termination = true
+    security_groups             = [aws_security_group.jenkins_master_sg.id]
+    delete_on_termination       = true
   }
 
   placement {
@@ -65,23 +65,23 @@ resource "aws_launch_template" "jenkins_master_lt" {
 resource "aws_autoscaling_group" "jenkins_master_asg" {
   depends_on = [aws_alb.jenkins_alb]
 
-  name_prefix         = "${var.component_name}-asg-${var.environment}"
+  name_prefix = "${var.component_name}-asg-${var.environment}"
 
-  vpc_zone_identifier  = data.terraform_remote_state.vpc.outputs.private_subnets
+  vpc_zone_identifier = data.terraform_remote_state.vpc.outputs.private_subnets
 
-  capacity_rebalance  = true
+  capacity_rebalance = true
 
   termination_policies      = var.termination_policies
-  max_size             = var.app_asg_max_size
-  min_size             = var.app_asg_min_size
-  desired_capacity     = var.app_asg_desired_capacity
-  target_group_arns = [aws_lb_target_group.jenkins_target_group.arn]
+  max_size                  = var.app_asg_max_size
+  min_size                  = var.app_asg_min_size
+  desired_capacity          = var.app_asg_desired_capacity
+  target_group_arns         = [aws_lb_target_group.jenkins_target_group.arn]
   health_check_grace_period = var.app_asg_health_check_grace_period
   health_check_type         = var.health_check_type
   wait_for_elb_capacity     = var.app_asg_wait_for_elb_capacity
   wait_for_capacity_timeout = var.wait_for_capacity_timeout
 
-  default_cooldown = var.default_cooldown
+  default_cooldown    = var.default_cooldown
   suspended_processes = var.suspended_processes
 
   mixed_instances_policy {
@@ -111,7 +111,7 @@ resource "aws_autoscaling_group" "jenkins_master_asg" {
   instance_refresh {
     strategy = "Rolling"
     preferences {
-      min_healthy_percentage = 50               # demo only, 90
+      min_healthy_percentage = 50 # demo only, 90
     }
   }
 
@@ -133,11 +133,11 @@ resource "aws_alb" "jenkins_alb" {
   name = "${var.component_name}-alb"
 
   load_balancer_type = "application"
-  subnets                   = data.terraform_remote_state.vpc.outputs.public_subnets
-  security_groups           = [aws_security_group.lb_sg.id]
-  internal                  = false
-  enable_http2              = "true"
-  idle_timeout              = 600
+  subnets            = data.terraform_remote_state.vpc.outputs.public_subnets
+  security_groups    = [aws_security_group.lb_sg.id]
+  internal           = false
+  enable_http2       = "true"
+  idle_timeout       = 600
 
   tags = merge(local.common_tags, map("Name", "${var.component_name}-${var.environment}-lb"))
 }

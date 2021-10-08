@@ -13,7 +13,7 @@ locals {
 }
 
 data "aws_ec2_spot_price" "this" {
-  for_each          = local.azs_instances_weights
+  for_each = local.azs_instances_weights
 
   availability_zone = split("/", each.key)[0]
   instance_type     = split("/", each.key)[1]
@@ -29,18 +29,18 @@ locals {
 
   price_per_unit_list = values(local.price_per_unit_map)
   price_current_optimal = max([
-  for az in local.azs_list : min([
-  for key in keys(local.price_per_unit_map) : lookup(local.price_per_unit_map, key) if split("/", key)[0] == az
-  ]...)
+    for az in local.azs_list : min([
+      for key in keys(local.price_per_unit_map) : lookup(local.price_per_unit_map, key) if split("/", key)[0] == az
+    ]...)
   ]...)
   price_current_min = min(local.price_per_unit_list...)
   price_current_max = max(local.price_per_unit_list...)
 
-  spot_price_current_max = ceil(tonumber(format("%f", local.price_current_max)) * var.normalization_modifier) / var.normalization_modifier
-  spot_price_current_max_mod = ceil(tonumber(format("%f", local.price_current_max)) * var.custom_price_modifier * var.normalization_modifier) / var.normalization_modifier
-  spot_price_current_min = ceil(tonumber(format("%f", local.price_current_min)) * var.normalization_modifier) / var.normalization_modifier
-  spot_price_current_min_mod = ceil(tonumber(format("%f", local.price_current_min)) * var.custom_price_modifier * var.normalization_modifier) / var.normalization_modifier
-  spot_price_current_optimal = ceil(tonumber(format("%f", local.price_current_optimal)) * var.normalization_modifier) / var.normalization_modifier
+  spot_price_current_max         = ceil(tonumber(format("%f", local.price_current_max)) * var.normalization_modifier) / var.normalization_modifier
+  spot_price_current_max_mod     = ceil(tonumber(format("%f", local.price_current_max)) * var.custom_price_modifier * var.normalization_modifier) / var.normalization_modifier
+  spot_price_current_min         = ceil(tonumber(format("%f", local.price_current_min)) * var.normalization_modifier) / var.normalization_modifier
+  spot_price_current_min_mod     = ceil(tonumber(format("%f", local.price_current_min)) * var.custom_price_modifier * var.normalization_modifier) / var.normalization_modifier
+  spot_price_current_optimal     = ceil(tonumber(format("%f", local.price_current_optimal)) * var.normalization_modifier) / var.normalization_modifier
   spot_price_current_optimal_mod = ceil(tonumber(format("%f", local.price_current_optimal)) * var.custom_price_modifier * var.normalization_modifier) / var.normalization_modifier
 
 }

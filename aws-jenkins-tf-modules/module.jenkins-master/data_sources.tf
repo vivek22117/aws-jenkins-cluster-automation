@@ -3,8 +3,8 @@ data "terraform_remote_state" "vpc" {
 
   config = {
     bucket = "${var.environment}-jenkins-tfstate-${data.aws_caller_identity.current.account_id}-${var.default_region}"
-    key     = "state/${var.environment}/vpc/terraform.tfstate"
-    region  = var.default_region
+    key    = "state/${var.environment}/vpc/terraform.tfstate"
+    region = var.default_region
   }
 }
 
@@ -13,8 +13,8 @@ data "terraform_remote_state" "jenkins_efs" {
 
   config = {
     bucket = "${var.environment}-jenkins-tfstate-${data.aws_caller_identity.current.account_id}-${var.default_region}"
-    key     = "state/${var.environment}/jenkins-master-efs/terraform.tfstate"
-    region  = var.default_region
+    key    = "state/${var.environment}/jenkins-master-efs/terraform.tfstate"
+    region = var.default_region
   }
 }
 
