@@ -111,7 +111,7 @@ resource "aws_autoscaling_group" "jenkins_master_asg" {
   instance_refresh {
     strategy = "Rolling"
     preferences {
-      min_healthy_percentage = 50 #demo only, 90
+      min_healthy_percentage = 50               # demo only, 90
     }
   }
 
