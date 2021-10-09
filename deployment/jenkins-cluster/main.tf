@@ -21,7 +21,6 @@ module "jenkins_master_cluster" {
   default_target_group_port = var.default_target_group_port
   efs_domain = var.efs_domain
   health_check_type = var.health_check_type
-  spot_price = var.spot_price
   volume_size = var.volume_size
   jenkins_dns_name = var.jenkins_dns_name
 }
