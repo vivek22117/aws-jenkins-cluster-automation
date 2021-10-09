@@ -5,7 +5,6 @@ module "jenkins_master_cluster" {
   source = "../../aws-jenkins-tf-modules/module.jenkins-master"
 
   environment = var.environment
-  profile = var.profile
   component_name = var.component_name
 
   app_asg_desired_capacity = var.app_asg_desired_capacity
@@ -19,7 +18,6 @@ module "jenkins_master_cluster" {
   termination_policies = var.termination_policies
 
   default_target_group_port = var.default_target_group_port
-  efs_domain = var.efs_domain
   health_check_type = var.health_check_type
   volume_size = var.volume_size
   jenkins_dns_name = var.jenkins_dns_name
