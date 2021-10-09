@@ -30,16 +30,6 @@ variable "volume_size" {
   description = "EBS volume size"
 }
 
-variable "spot_price" {
-  type        = string
-  description = "EC2 spot price"
-}
-
-variable "efs_domain" {
-  type        = string
-  description = "EFS domain generated"
-}
-
 variable "app_asg_max_size" {
   type        = string
   description = "ASG max size"
@@ -76,7 +66,7 @@ variable "default_cooldown" {
 }
 
 variable "termination_policies" {
-  description = "A list of policies to decide how the instances in the auto scale group should be terminated"
+  description = "A list of policies to decide how the instances in the auto scale group should be terminated, valid values NewestInstance, OldestInstance,  OldestLaunchTemplate, Default"
   type        = list(string)
 }
 
