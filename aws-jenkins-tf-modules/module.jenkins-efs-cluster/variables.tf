@@ -34,7 +34,7 @@ variable "efs_lifecycle" {
 locals {
   common_tags = {
     owner       = "Vivek"
-    team        = "DoubleDigitTeam"
+    team        = "LearningTeam"
     environment = var.environment
   }
 }

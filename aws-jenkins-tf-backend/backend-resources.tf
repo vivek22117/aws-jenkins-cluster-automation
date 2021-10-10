@@ -1,4 +1,4 @@
-#####=====================Terraform tfstate backend S3===================#####
+#####============================Terraform tfstate backend S3==========================#####
 resource "aws_s3_bucket" "tf_state_backend_bucket" {
   bucket = "${var.environment}-jenkins-tfstate-${data.aws_caller_identity.current.account_id}-${var.default_region}"
   acl    = "private"
@@ -35,7 +35,7 @@ resource "aws_s3_bucket" "tf_state_backend_bucket" {
 }
 
 
-#####=========================DynamoDB Table for tfstate state lock=====================#####
+#####=========================DynamoDB Table for tfstate state lock===========================#####
 resource "aws_dynamodb_table" "dynamodb-terraform-state-lock" {
   name           = "${var.environment}-jenkins-tfstate-lock-db-${var.default_region}"
   read_capacity  = 2
