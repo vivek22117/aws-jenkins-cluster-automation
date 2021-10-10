@@ -12,6 +12,7 @@ suspended_processes               = []
 termination_policies              = ["NewestInstance", "Default"]
 health_check_type                 = "ELB"
 lb_type = "application"
+lb_isInternal = false
 
 volume_size = "20"
 volume_type = "gp2"

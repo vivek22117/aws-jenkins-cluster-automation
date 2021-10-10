@@ -85,6 +85,11 @@ variable "lb_type" {
   description = "AWS Loadbalancer type to deploy"
 }
 
+variable "lb_isInternal" {
+  type = bool
+  description = "Flag for ELB Internal / Public"
+}
+
 
 ##### =============================== Spot Price Script Config =============================#####
 variable "instance_types_list" {

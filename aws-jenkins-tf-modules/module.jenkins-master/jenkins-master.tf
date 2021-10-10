@@ -135,7 +135,7 @@ resource "aws_alb" "jenkins_alb" {
   load_balancer_type = var.lb_type
   subnets            = data.terraform_remote_state.vpc.outputs.public_subnets
   security_groups    = [aws_security_group.lb_sg.id]
-  internal           = false
+  internal           = var.lb_isInternal
   enable_http2       = "true"
   idle_timeout       = 600
 
