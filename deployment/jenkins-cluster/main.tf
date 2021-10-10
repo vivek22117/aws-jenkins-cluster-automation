@@ -7,6 +7,8 @@ module "jenkins_master_cluster" {
   environment    = var.environment
   component_name = var.component_name
 
+  volume_type = var.volume_type
+
   app_asg_desired_capacity          = var.app_asg_desired_capacity
   app_asg_health_check_grace_period = var.app_asg_health_check_grace_period
   app_asg_max_size                  = var.app_asg_max_size

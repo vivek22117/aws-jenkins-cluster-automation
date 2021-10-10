@@ -1,4 +1,5 @@
 environment                       = "qa"
+
 component_name                    = "jenkins-master"
 app_asg_desired_capacity          = 1
 app_asg_health_check_grace_period = 300
@@ -10,6 +11,9 @@ wait_for_capacity_timeout         = "10m"
 suspended_processes               = []
 termination_policies              = ["NewestInstance", "Default"]
 health_check_type                 = "ELB"
+
+volume_size = "20"
+volume_type = "gp2"
 
 default_target_group_port = 8080
 
