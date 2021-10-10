@@ -9,7 +9,7 @@ resource "aws_key_pair" "ssh_key" {
   key_name   = "jenkins-admin-key"
   public_key = tls_private_key.jenkins_host_ssh_data.public_key_openssh
 
-  tags = merge(local.common_tags, map("Name", "jenkins-nodes-ssh-key"))
+  tags = merge(local.common_tags, map("Name", "${var.component_name}-ssh-key"))
 }
 
 resource "aws_launch_template" "jenkins_master_lt" {
@@ -44,7 +44,7 @@ resource "aws_launch_template" "jenkins_master_lt" {
 
     ebs {
       volume_size           = var.volume_size
-      volume_type           = "gp2"
+      volume_type           = var.volume_type
       delete_on_termination = true
     }
   }
