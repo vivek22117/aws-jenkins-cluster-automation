@@ -11,7 +11,7 @@ variable "environment" {
 }
 
 variable "component_name" {
-  type = string
+  type        = string
   description = "Component name under which the resources will be deployed"
 }
 
@@ -21,7 +21,7 @@ variable "jenkins_dns_name" {
 }
 
 variable "volume_size" {
-  type = number
+  type        = number
   description = "EBS volume size"
 }
 
