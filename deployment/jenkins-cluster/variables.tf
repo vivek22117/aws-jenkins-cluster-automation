@@ -25,6 +25,11 @@ variable "volume_size" {
   description = "EBS volume size"
 }
 
+variable "volume_type" {
+  type = string
+  description = "EBS volume type"
+}
+
 variable "app_asg_max_size" {
   type        = string
   description = "ASG max size"
