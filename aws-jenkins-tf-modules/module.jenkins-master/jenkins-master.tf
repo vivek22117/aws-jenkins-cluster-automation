@@ -143,10 +143,11 @@ resource "aws_alb" "jenkins_alb" {
 }
 
 
+
 resource "aws_lb_listener" "jenkins_alb_listener" {
   load_balancer_arn = aws_alb.jenkins_alb.arn
-  port              = "80"
-  protocol          = "HTTP"
+  port              = var.listener_port
+  protocol          = var.listener_protocol
 
   default_action {
     type             = "forward"

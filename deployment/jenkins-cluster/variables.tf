@@ -90,6 +90,16 @@ variable "lb_isInternal" {
   description = "Flag for ELB Internal / Public"
 }
 
+variable "listener_port" {
+  type = string
+  description = "ELB listener PORT, 80, 443"
+}
+
+variable "listener_protocol" {
+  type = string
+  description = "ELB listener protocol HTTP, HTTPS"
+}
+
 ##### =============================== Spot Price Script Config =============================#####
 variable "instance_types_list" {
   description = "List of instance types. If not default will overwrite `instance_types_weighted_map`. "
