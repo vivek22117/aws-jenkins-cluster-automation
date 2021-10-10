@@ -80,6 +80,11 @@ variable "wait_for_capacity_timeout" {
   type        = string
 }
 
+variable "lb_type" {
+  type = string
+  description = "AWS Loadbalancer type to deploy"
+}
+
 
 ##### =============================== Spot Price Script Config =============================#####
 variable "instance_types_list" {

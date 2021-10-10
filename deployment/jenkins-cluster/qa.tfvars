@@ -11,6 +11,7 @@ wait_for_capacity_timeout         = "10m"
 suspended_processes               = []
 termination_policies              = ["NewestInstance", "Default"]
 health_check_type                 = "ELB"
+lb_type = "application"
 
 volume_size = "20"
 volume_type = "gp2"

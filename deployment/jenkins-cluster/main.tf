@@ -18,6 +18,7 @@ module "jenkins_master_cluster" {
   wait_for_capacity_timeout         = var.wait_for_capacity_timeout
   suspended_processes               = var.suspended_processes
   termination_policies              = var.termination_policies
+  lb_type = var.lb_type
 
   default_target_group_port = var.default_target_group_port
   health_check_type         = var.health_check_type

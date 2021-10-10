@@ -132,7 +132,7 @@ resource "aws_autoscaling_group" "jenkins_master_asg" {
 resource "aws_alb" "jenkins_alb" {
   name = "${var.component_name}-alb"
 
-  load_balancer_type = "application"
+  load_balancer_type = var.lb_type
   subnets            = data.terraform_remote_state.vpc.outputs.public_subnets
   security_groups    = [aws_security_group.lb_sg.id]
   internal           = false
