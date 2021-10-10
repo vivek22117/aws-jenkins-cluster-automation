@@ -6,8 +6,8 @@ module "jenkins_efs_cluster" {
 
   environment = var.environment
 
-  efs_lifecycle = var.efs_lifecycle
-  isEncrypted = var.isEncrypted
+  efs_lifecycle    = var.efs_lifecycle
+  isEncrypted      = var.isEncrypted
   performance_mode = var.performance_mode
-  throughput_mode = var.throughput_mode
+  throughput_mode  = var.throughput_mode
 }
