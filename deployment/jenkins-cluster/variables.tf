@@ -109,7 +109,6 @@ variable "default_target_group_port" {
 variable "instance_types_list" {
   description = "List of instance types. If not default will overwrite `instance_types_weighted_map`. "
   type        = list(string)
-  default     = []
 }
 
 variable "instance_types_weighted_map" {
@@ -118,14 +117,11 @@ variable "instance_types_weighted_map" {
     instance_type     = string
     weighted_capacity = string
   }))
-  default = [{ instance_type = "t3a.small", weighted_capacity = "1" }]
 }
 
 variable "instance_weight_default" {
   type        = number
   description = "Default number of capacity units for all instance types."
-  default     = 1
-
   validation {
     condition     = var.instance_weight_default >= 1 && var.instance_weight_default <= 999
     error_message = "Value must be in the range of 1 to 999."
@@ -141,7 +137,6 @@ variable "product_description_list" {
 variable "custom_price_modifier" {
   type        = number
   description = "Modifier for getting custom prices. Must be between 1 and 2. Values greater than 1.7 will often not make sense. Because it will be equal or greater than on-demand price."
-  default     = 1.05
   validation {
     condition     = var.custom_price_modifier >= 1 && var.custom_price_modifier <= 2
     error_message = "Modifier for getting custom prices. Must be between 1 and 2. Values greater than 1.7 will often not make sense. Because it will be equal or greater than on-demand price."
@@ -151,8 +146,6 @@ variable "custom_price_modifier" {
 variable "normalization_modifier" {
   type        = number
   description = "Modifier for price normalization (rounded up / ceil). Helps to avoid small price fluctuations. Must be 10, 100, 1000 or 10000."
-  default     = 1000
-
   validation {
     condition     = contains([10, 100, 1000, 10000], var.normalization_modifier)
     error_message = "Modifier for price normalization must be 10, 100, 1000 or 10000."
