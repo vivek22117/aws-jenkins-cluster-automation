@@ -1,4 +1,4 @@
-environment                       = "qa"
+environment                       = "test"
 
 component_name                    = "jenkins-master"
 app_asg_desired_capacity          = 1
