@@ -27,4 +27,12 @@ module "jenkins_master_cluster" {
   health_check_type         = var.health_check_type
   volume_size               = var.volume_size
   jenkins_dns_name          = var.jenkins_dns_name
+
+  instance_types_list = var.instance_types_list
+  instance_types_weighted_map = var.instance_types_weighted_map
+  instance_weight_default = var.instance_weight_default
+  product_description_list = var.product_description_list
+  custom_price_modifier = var.custom_price_modifier
+  normalization_modifier = var.normalization_modifier
+
 }

@@ -152,6 +152,7 @@ variable "normalization_modifier" {
   type        = number
   description = "Modifier for price normalization (rounded up / ceil). Helps to avoid small price fluctuations. Must be 10, 100, 1000 or 10000."
   default     = 1000
+
   validation {
     condition     = contains([10, 100, 1000, 10000], var.normalization_modifier)
     error_message = "Modifier for price normalization must be 10, 100, 1000 or 10000."
