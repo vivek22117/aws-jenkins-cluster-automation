@@ -1,10 +1,10 @@
 #####========================== Security Group for Jenkins Master ===========================#####
 resource "aws_security_group" "jenkins_master_sg" {
-  name        = "jenkins-master-sg"
+  name        = "${var.component_name}-sg"
   description = "Allow traffic from port 8080 and enable SSH"
   vpc_id      = data.terraform_remote_state.vpc.outputs.vpc_id
 
-  tags = merge(local.common_tags, map("Name", "jenkins-master-sg"))
+  tags = merge(local.common_tags, map("Name", "${var.component_name}-sg"))
 }
 
 resource "aws_security_group_rule" "allow_traffic_from_lb" {
@@ -37,11 +37,11 @@ resource "aws_security_group_rule" "master_outbound_rule" {
 
 #####========================== Security Group for Elastic Load Balancer ===========================#####
 resource "aws_security_group" "lb_sg" {
-  name        = "jenkins-lb-sg"
+  name        = "${var.component_name}-lb-sg"
   description = "load balancer security group"
   vpc_id      = data.terraform_remote_state.vpc.outputs.vpc_id
 
-  tags = merge(local.common_tags, map("Name", "jenkins-lb-sg"))
+  tags = merge(local.common_tags, map("Name", "${var.component_name}-lb-sg"))
 }
 
 resource "aws_security_group_rule" "allow_http" {

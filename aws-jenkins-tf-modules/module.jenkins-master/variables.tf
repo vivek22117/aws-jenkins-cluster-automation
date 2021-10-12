@@ -100,6 +100,11 @@ variable "listener_protocol" {
   description = "ELB listener protocol HTTP, HTTPS"
 }
 
+variable "default_target_group_port" {
+  type        = number
+  description = "Target group port for ECS Cluster"
+}
+
 ##### =============================== Spot Price Script Config =============================#####
 variable "instance_types_list" {
   description = "List of instance types. If not default will overwrite `instance_types_weighted_map`. "
@@ -153,22 +158,17 @@ variable "normalization_modifier" {
   }
 }
 
-variable "default_target_group_port" {
-  type        = number
-  description = "Target group port for ECS Cluster"
-}
-
 #####=============ASG Standards Tags===============#####
 variable "custom_tags" {
   description = "Custom tags to set on the Instances in the ASG"
   type        = map(string)
   default = {
     owner      = "Vivek"
-    team       = "DoubleDigitTeam"
+    team       = "LearningTeam"
     tool       = "Terraform"
     monitoring = "true"
     Name       = "Jenkins-Master"
-    Project    = "DoubleDigit-Solutions"
+    Project    = "Learning-TF"
   }
 }
 
@@ -176,9 +176,9 @@ variable "custom_tags" {
 locals {
   common_tags = {
     owner       = "Vivek"
-    team        = "DoubleDigitTeam"
+    team        = "LearningTeam"
     environment = var.environment
-    Project     = "DoubleDigit-Solutions"
+    Project     = "Learning-TF"
   }
 }
 
