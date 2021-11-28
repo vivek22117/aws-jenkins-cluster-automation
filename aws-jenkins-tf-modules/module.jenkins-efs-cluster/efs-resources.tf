@@ -9,7 +9,7 @@ resource "aws_efs_file_system" "jenkins_efs" {
     transition_to_ia = var.efs_lifecycle
   }
 
-  tags = merge(local.common_tags, map("Name", "jenkins-master-efs"))
+  tags = merge(local.common_tags, map("Name", "jenkins-efs-cluster"))
 }
 
 
