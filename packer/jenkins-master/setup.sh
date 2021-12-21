@@ -2,6 +2,8 @@
 
 echo "Configure EFS for storage"
 yum update -y
+sudo amazon-linux-extras install epel -y
+sudo yum-config-manager --enable epel
 yum install nfs-utils
 
 sleep 5
@@ -17,15 +19,12 @@ sudo mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,ret
 sleep 10
 
 echo "Install Jenkins stable release"
-yum remove -y java
-yum install -y java-1.8.0-openjdk
-sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins-ci.org/redhat/jenkins.repo --no-check-certificate
-#sudo rpm --import https://jenkins-ci.org/redhat/jenkins-ci.org.key
-sudo rpm --import https://pkg.jenkins.io/redhat/jenkins.io.key
-sleep 11
+sudo yum install java-1.8.0-openjdk-devel -y
+sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins-ci.org/redhat-stable/jenkins.repo --no-check-certificate
+sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key
+
 yum --showduplicates list jenkins | expand
-sudo yum install -y jenkins-2.255-1.1
-sleep 2
+sudo yum install -y jenkins-2.319.1-1.1
 chkconfig jenkins on
 
 sleep 5
