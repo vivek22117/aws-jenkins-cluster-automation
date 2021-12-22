@@ -2,7 +2,9 @@
 
 echo "Install Java JDK 8"
 sudo yum remove -y java
-sudo yum install -y java-1.8*
+sudo amazon-linux-extras install epel -y
+sudo yum-config-manager --enable epel
+sudo yum install -y java-1.8.0-openjdk
 
 sleep 5
 echo "Install Docker engine"
