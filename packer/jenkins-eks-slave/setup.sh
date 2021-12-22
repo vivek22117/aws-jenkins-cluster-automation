@@ -3,6 +3,8 @@
 
 echo "Install Java8"
 sudo yum remove -y java
+sudo amazon-linux-extras install epel -y
+sudo yum-config-manager --enable epel
 sudo yum install -y java-1.8.0-openjdk
 
 
