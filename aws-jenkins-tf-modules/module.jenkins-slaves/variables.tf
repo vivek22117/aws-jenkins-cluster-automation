@@ -9,6 +9,18 @@ variable "environment" {
   description = "Environment to be configured 'dev', 'qa', 'prod'"
 }
 
+variable "component_name" {
+  type = string
+  description = "Component name for resources tag"
+}
+
+variable "instance_types_list" {
+  description = "List of instance types. If not default will overwrite `instance_types_weighted_map`. "
+  type        = list(string)
+  default     = []
+}
+
+
 variable "jenkins_username" {
   description = "Jenkins username"
 }
@@ -47,23 +59,13 @@ variable "default_region" {
   default = "us-east-1"
 }
 
-variable "dyanamoDB_prefix" {
-  type    = string
-  default = "doubledigit-tfstate"
-}
-
-variable "s3_bucket_prefix" {
-  type    = string
-  default = "doubledigit-tfstate"
-}
-
 #####=============ASG Standards Tags===============#####
 variable "custom_tags" {
   description = "Custom tags to set on the Instances in the ASG"
   type        = map(string)
   default = {
     owner      = "Vivek"
-    team       = "DoubleDigitTeam"
+    team       = "Learning-Group"
     tool       = "Terraform"
     monitoring = "true"
     Name       = "Jenkins-Salve"
@@ -74,7 +76,7 @@ variable "custom_tags" {
 locals {
   common_tags = {
     owner       = "Vivek"
-    team        = "DoubleDigitTeam"
+    team        = "Learning-Group"
     environment = var.environment
   }
 }
