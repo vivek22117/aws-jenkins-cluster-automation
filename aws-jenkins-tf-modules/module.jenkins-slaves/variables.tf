@@ -20,6 +20,15 @@ variable "instance_types_list" {
   default     = []
 }
 
+variable "volume_size" {
+  type        = number
+  description = "EBS volume size"
+}
+
+variable "volume_type" {
+  type = string
+  description = "EBS volume type"
+}
 
 variable "jenkins_username" {
   description = "Jenkins username"
