@@ -68,16 +68,54 @@ resource "aws_launch_template" "jenkins_master_lt" {
 
 #####===========================ASG Jenkins slaves===============================#####
 resource "aws_autoscaling_group" "jenkins_slaves_asg" {
-  name_prefix = "${aws_launch_configuration.jenkins_slave_launch_conf.name}-asg"
+  name_prefix = "${var.component_name}-asg-${var.environment}"
 
-  max_size             = var.max_count
-  min_size             = var.environment == "prod" ? 2 : var.instance_count
-  desired_capacity     = var.environment == "prod" ? 2 : var.instance_count
-  vpc_zone_identifier  = data.terraform_remote_state.vpc.outputs.private_subnets
-  launch_configuration = aws_launch_configuration.jenkins_slave_launch_conf.name
+  vpc_zone_identifier = data.terraform_remote_state.vpc.outputs.private_subnets
 
-  health_check_grace_period = 100
-  health_check_type         = "EC2"
+  capacity_rebalance = true
+
+  termination_policies      = var.termination_policies
+  max_size                  = var.app_asg_max_size
+  min_size                  = var.app_asg_min_size
+  desired_capacity          = var.app_asg_desired_capacity
+  health_check_grace_period = var.app_asg_health_check_grace_period
+  health_check_type         = var.health_check_type
+  wait_for_elb_capacity     = var.app_asg_wait_for_elb_capacity
+  wait_for_capacity_timeout = var.wait_for_capacity_timeout
+
+  default_cooldown    = var.default_cooldown
+  suspended_processes = var.suspended_processes
+
+  mixed_instances_policy {
+    launch_template {
+      launch_template_specification {
+        launch_template_id = aws_launch_template.jenkins_master_lt.id
+        version            = aws_launch_template.jenkins_master_lt.latest_version
+      }
+      dynamic "override" {
+        for_each = local.instance_types
+        content {
+          instance_type     = override.value
+          weighted_capacity = "1"
+        }
+      }
+    }
+    instances_distribution {
+      on_demand_base_capacity                  = 0
+      on_demand_percentage_above_base_capacity = 0
+      spot_allocation_strategy                 = "capacity-optimized"
+      spot_max_price                           = local.spot_price_current_max
+      #spot_max_price                           = local.spot_price_current_min_mod
+      #spot_max_price                           = local.spot_price_current_optimal
+    }
+  }
+
+  instance_refresh {
+    strategy = "Rolling"
+    preferences {
+      min_healthy_percentage = 50 # demo only, 90
+    }
+  }
 
   lifecycle {
     create_before_destroy = true
@@ -94,7 +132,7 @@ resource "aws_autoscaling_group" "jenkins_slaves_asg" {
 }
 
 
-#####===============Jenkins Slave ASG scalaing alarm and policy==================#####
+#####===============Jenkins Slave ASG scaling alarm and policy==================#####
 resource "aws_cloudwatch_metric_alarm" "high_cpu_jenkins_slaves_alarm" {
   alarm_name          = "high-cpu-jenkins-slaves-alarm"
   comparison_operator = "GreaterThanOrEqualToThreshold"
