@@ -1,3 +1,8 @@
+locals {
+  azs_max  = 3
+  instance_types = length(var.instance_types_list) == 0 ? ["t3a.small", "t2.small"] : var.instance_types_list
+}
+
 #####==================Jenkins slaves resource template===================#####
 data "template_file" "user_data_slave" {
   template = file("scripts/join-cluster.tpl")
@@ -11,31 +16,55 @@ data "template_file" "user_data_slave" {
   }
 }
 
-#####=============enkins slaves launch configuration=========================#####
-resource "aws_launch_configuration" "jenkins_slave_launch_conf" {
-  name_prefix = "jenkins-slave-"
+#####=============jenkins slaves launch configuration=========================#####
+resource "aws_launch_template" "jenkins_master_lt" {
+  name_prefix = "${var.component_name}-lt-${var.environment}"
 
-  image_id        = data.aws_ami.jenkins-slave-ami.id
-  instance_type   = var.environment == "prod" ? "t2.small" : var.instance_type
-  key_name        = data.terraform_remote_state.jenkins_master.outputs.jenkins_key
-  security_groups = [aws_security_group.jenkins_slaves_sg.id]
+  update_default_version = true
+  image_id               = data.aws_ami.jenkins-slave-ami.id
+  instance_type          = local.instance_types[0]
+  key_name               = data.terraform_remote_state.jenkins_master.outputs.jenkins_key
 
-  user_data                   = data.template_file.user_data_slave.rendered
-  iam_instance_profile        = data.terraform_remote_state.jenkins_master.outputs.jenkins_profile
-  associate_public_ip_address = false
+  user_data = base64encode(data.template_file.user_data_slave.rendered)
 
-  root_block_device {
-    volume_type           = "gp2"
-    volume_size           = 10
-    delete_on_termination = true
+  instance_initiated_shutdown_behavior = "terminate"
+
+  iam_instance_profile {
+    arn = data.terraform_remote_state.jenkins_master.outputs.jenkins_profile
   }
 
-  spot_price = var.spot_price
+  network_interfaces {
+    device_index                = 0
+    associate_public_ip_address = false
+    security_groups             = [aws_security_group.jenkins_slaves_sg.id]
+    delete_on_termination       = true
+  }
+
+  placement {
+    tenancy = "default"
+  }
+
+  block_device_mappings {
+    device_name = "/dev/xvda"
+
+    ebs {
+      volume_size           = var.volume_size
+      volume_type           = var.volume_type
+      delete_on_termination = true
+    }
+  }
+
+  tag_specifications {
+    resource_type = "instance"
+
+    tags = merge(local.common_tags, map("Project", "${var.component_name}-node"))
+  }
 
   lifecycle {
     create_before_destroy = true
   }
 }
+
 
 #####===========================ASG Jenkins slaves===============================#####
 resource "aws_autoscaling_group" "jenkins_slaves_asg" {
