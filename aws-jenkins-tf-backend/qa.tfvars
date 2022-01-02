@@ -1,7 +1,7 @@
 default_region = "us-east-1"
 
 environment = "qa"
-team        = "LearningTeam"
-component   = "BackendConfig-Project"
+team        = "Learning-Group"
+component   = "Jenkins-Project"
 
 
