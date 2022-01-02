@@ -168,7 +168,7 @@ resource "aws_alb_listener_rule" "ecs_alb_listener_rule" {
 
   condition {
     path_pattern {
-      values = ["/"]
+      values = ["*"]
     }
   }
 }
