@@ -2,6 +2,7 @@
 
 echo "Configure EFS for storage"
 yum update -y
+sudo yum install wget unzip git -y
 sudo amazon-linux-extras install epel -y
 sudo yum-config-manager --enable epel
 yum install nfs-utils
