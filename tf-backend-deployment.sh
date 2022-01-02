@@ -63,33 +63,16 @@ do
 done
 
 
-echo -e "\n\n ======================= Choose AMI Filter Type To Create EC2 =================================="
-
-PS3="Select ami filter type. Select 'self_owned' option, only if the default VPC is available within the AWS account: "
-
-AMI_FILTER_TYPE="amazon"
-
-select AMI_FILTER in self_owned amazon_owned
-do
-    echo "You have selected $AMI_FILTER ami filter type."
-
-    if [ $AMI_FILTER == 'self_owned' ]; then
-      AMI_FILTER_TYPE='self'
-    fi
-
-    break
-done
-
-
 function terraform_backend_deployment() {
     echo -e "\n\n==================== Starting Terraform Backend Deployment ========================="
 
-    cd aws-terraform-backend
+    cd aws-jenkins-tf-backend
 
     sed -i '/profile/s/^#//g' providers.tf
-    sed -i '/backend/,+4d' providers.tf
 
-    terraform init -reconfigure
+    terraform init -backend-config="config/$ENV-backend-config.config" \
+    -backend-config="bucket=$ENV-jenkins-tfstate-$AWS_ACCOUNT_ID-$AWS_REGION" -reconfigure
+
     terraform plan -var-file="$ENV.tfvars" -var="default_region=$AWS_REGION"
     terraform apply -var-file="$ENV.tfvars" -var="default_region=$AWS_REGION" -var="environment=$ENV" -auto-approve
 
@@ -97,8 +80,6 @@ function terraform_backend_deployment() {
 
     echo -e "========================= Completed ================================================ \n\n"
 }
-
-
 
 
 if [ $EXEC_TYPE == 'apply' ]; then
@@ -110,66 +91,11 @@ fi
 
 
 if [ $EXEC_TYPE == 'destroy' ]; then
-
-  PS3="Do you want to destroy TF backend resources? "
-
-  select DESTROY_BACKEND in Yes No
-  do
-      echo "Your input is $DESTROY_BACKEND"
-      break
-  done
-
-  if [ $DESTROY_BACKEND == 'Yes' ]; then
     echo -e "\n\n ========================= Destroying Backend TF Resources =============================="
     cd aws-jenkins-tf-backend
+
     terraform init -reconfigure
     terraform destroy -var-file="$ENV.tfvars" -var="default_region=$AWS_REGION" -var="environment=$ENV" -auto-approve
     cd ..
-  fi
-  
-  
-  echo -e "\n\n ========================= =============================== =============================="
-  PS3="Do you want to deregister & delete Jenkins AMIs? Select by inserting the number: "
-
-  select AMI_DELETE_FLAG in Yes No
-  do
-      echo "Your input is $AMI_DELETE_FLAG"
-      break
-  done
-  
-  if [ $AMI_DELETE_FLAG=='Yes' ] && [ $AMI_FILTER_TYPE=='self' ]; then
-
-      BASTION_AMI_ID=$(aws ec2 describe-images --filters "Name=tag:Name,Values=Jenkins-Master-2.x" --query 'Images[*].ImageId' --region $AWS_REGION --profile default --output text)
-
-      if [ ! -z $BASTION_AMI_ID ]; then
-          aws ec2 deregister-image --image-id $BASTION_AMI_ID --region $AWS_REGION
-
-          BASTION_SNAPSHOT=$(aws ec2 describe-snapshots --owner-ids self --filters Name=tag:Name,Values=Bastion-AMI --query "Snapshots[*].SnapshotId" --output text --region $AWS_REGION)
-          for ID in $BASTION_SNAPSHOT;
-          do
-            aws ec2 delete-snapshot --snapshot-id $ID --region $AWS_REGION
-            echo ====================== Bastion Host AMI Delete Successfully =============================
-          done
-      fi
-
-
-
-      ECS_AMI_ID=$(aws ec2 describe-images --filters "Name=tag:Name,Values=Jenkins-Slave-AMI" --query 'Images[*].ImageId' --region $AWS_REGION --profile default --output text)
-
-      if [ ! -z $ECS_AMI_ID ]; then
-        aws ec2 deregister-image --image-id $ECS_AMI_ID --region $AWS_REGION
-
-        ECS_SNAPSHOT=$(aws ec2 describe-snapshots --owner-ids self --filters Name=tag:Name,Values=ECS-AMI --query "Snapshots[*].SnapshotId" --output text --region $AWS_REGION)
-
-        for ID in $ECS_SNAPSHOT;
-        do
-          aws ec2 delete-snapshot --snapshot-id $ID --region $AWS_REGION
-          echo ======================== ECS AMI Deleted Successfully ======================================
-        done
-      fi
-
-  else
-    echo "No activity to perform!"
-  fi
 
 fi
