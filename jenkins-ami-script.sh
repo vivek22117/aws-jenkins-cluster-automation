@@ -85,17 +85,17 @@ fi
 if [ $EXEC_TYPE == 'destroy_ami' ]; then
 
   echo -e "\n\n ========================= =============================== =============================="
-      CI_CD_AMI_ID=$(aws ec2 describe-images --filters "Name=tag:Name,Values=Jenkins-Master-2.x" --query 'Images[*].ImageId' --region $AWS_REGION --profile default --output text)
+  CI_CD_AMI_ID=$(aws ec2 describe-images --filters "Name=tag:Name,Values=Jenkins-Master-2.x" --query 'Images[*].ImageId' --region $AWS_REGION --profile default --output text)
 
-      if [ ! -z $CI_CD_AMI_ID ]; then
-          aws ec2 deregister-image --image-id $CI_CD_AMI_ID --region $AWS_REGION
+  if [ ! -z $CI_CD_AMI_ID ]; then
+      aws ec2 deregister-image --image-id $CI_CD_AMI_ID --region $AWS_REGION
 
-          CI_CD_SNAPSHOT=$(aws ec2 describe-snapshots --owner-ids self --filters Name=tag:Name,Values=CI-CD-Server --query "Snapshots[*].SnapshotId" --output text --region $AWS_REGION)
-          for ID in $CI_CD_SNAPSHOT;
-          do
-            aws ec2 delete-snapshot --snapshot-id $ID --region $AWS_REGION
-            echo ====================== CI/CD Node AMI Delete Successfully =============================
-          done
-      fi
+      CI_CD_SNAPSHOT=$(aws ec2 describe-snapshots --owner-ids self --filters Name=tag:Name,Values=CI-CD-Server --query "Snapshots[*].SnapshotId" --output text --region $AWS_REGION)
+      for ID in $CI_CD_SNAPSHOT;
+        do
+          aws ec2 delete-snapshot --snapshot-id $ID --region $AWS_REGION
+          echo ====================== CI/CD Node AMI Delete Successfully =============================
+        done
+  fi
 
 fi
