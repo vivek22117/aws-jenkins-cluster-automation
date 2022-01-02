@@ -26,7 +26,7 @@ variable "volume_size" {
 }
 
 variable "volume_type" {
-  type = string
+  type        = string
   description = "EBS volume type"
 }
 
@@ -81,22 +81,22 @@ variable "wait_for_capacity_timeout" {
 }
 
 variable "lb_type" {
-  type = string
+  type        = string
   description = "AWS Loadbalancer type to deploy"
 }
 
 variable "lb_isInternal" {
-  type = bool
+  type        = bool
   description = "Flag for ELB Internal / Public"
 }
 
 variable "listener_port" {
-  type = string
+  type        = string
   description = "ELB listener PORT, 80, 443"
 }
 
 variable "listener_protocol" {
-  type = string
+  type        = string
   description = "ELB listener protocol HTTP, HTTPS"
 }
 

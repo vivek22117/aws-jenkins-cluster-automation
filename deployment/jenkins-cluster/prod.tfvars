@@ -1,4 +1,4 @@
-environment                       = "prod"
+environment = "prod"
 
 component_name                    = "jenkins-master"
 app_asg_desired_capacity          = 1
@@ -11,10 +11,10 @@ wait_for_capacity_timeout         = "10m"
 suspended_processes               = []
 termination_policies              = ["NewestInstance", "Default"]
 health_check_type                 = "ELB"
-lb_type = "application"
-lb_isInternal = false
-listener_port = "80"
-listener_protocol = "HTTP"
+lb_type                           = "application"
+lb_isInternal                     = false
+listener_port                     = "80"
+listener_protocol                 = "HTTP"
 
 volume_size = "30"
 volume_type = "gp2"
