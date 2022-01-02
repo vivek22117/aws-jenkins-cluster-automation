@@ -1,8 +1,3 @@
-locals {
-  azs_max  = 3
-  instance_types = length(var.instance_types_list) == 0 ? ["t3a.small", "t2.small"] : var.instance_types_list
-}
-
 #####==================Jenkins slaves resource template===================#####
 data "template_file" "user_data_slave" {
   template = file("scripts/join-cluster.tpl")
@@ -16,7 +11,7 @@ data "template_file" "user_data_slave" {
   }
 }
 
-#####=============jenkins slaves launch configuration=========================#####
+#####=============jenkins slaves launch template=========================#####
 resource "aws_launch_template" "jenkins_master_lt" {
   name_prefix = "${var.component_name}-lt-${var.environment}"
 
