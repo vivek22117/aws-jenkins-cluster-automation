@@ -66,16 +66,6 @@
     },
     {
       "type" : "file",
-      "source" : "/Users/vivek/.ssh/id_rsa",
-      "destination" : "/tmp/id_rsa"
-    },
-    {
-      "type" : "file",
-      "source" : "/Users/vivek/.ssh/id_rsa.pub",
-      "destination" : "/tmp/id_rsa.pub"
-    },
-    {
-      "type" : "file",
       "source" : "./node-agent.groovy",
       "destination" : "/tmp/node-agent.groovy"
     },

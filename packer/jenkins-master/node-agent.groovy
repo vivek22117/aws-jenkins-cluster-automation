@@ -26,8 +26,8 @@ new BasicSSHUserPrivateKey.DirectEntryPrivateKeySource(privateKey),
 githubCredentials = new UsernamePasswordCredentialsImpl(
   CredentialsScope.GLOBAL,
   "github", "Github credentials",
-  "username",
-  "password"
+  "vivek22117",
+  "vivek@22117"
 )
 
 
