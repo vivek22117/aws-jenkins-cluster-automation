@@ -19,7 +19,7 @@ data "terraform_remote_state" "jenkins_efs" {
 }
 
 data "template_file" "script" {
-  template = file("script/user-data.tpl")
+  template = file("${path.module}/script/user-data.tpl")
 
   vars = {
     efs_id = data.terraform_remote_state.jenkins_efs.outputs.efs_dns
