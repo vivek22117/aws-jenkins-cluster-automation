@@ -18,10 +18,6 @@ output "jenkins_profile" {
   value = aws_iam_instance_profile.jenkins_profile.arn
 }
 
-output "route53_public_dns_name" {
-  value = aws_route53_record.jenkins_record.*.name[0]
-}
-
 #####=========================================================#####
 output "spot_price_current_max" {
   description = "Maximum current Spot Price, which allows to run all Instance Types in all AZ. Maximum stability."

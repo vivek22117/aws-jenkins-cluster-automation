@@ -18,10 +18,6 @@ output "jenkins_profile" {
   value = module.jenkins_master_cluster.jenkins_profile
 }
 
-output "route53_public_dns_name" {
-  value = module.jenkins_master_cluster.route53_public_dns_name
-}
-
 #####=========================================================================================#####
 output "spot_price_current_max" {
   description = "Maximum current Spot Price, which allows to run all Instance Types in all AZ. Maximum stability."
