@@ -34,10 +34,6 @@ output "public_rt" {
   value = aws_route_table.public.*.id
 }
 
-output "bastion_sg_id" {
-  value = aws_security_group.bastion_host_sg.id
-}
-
 output "vpc_cidr_block" {
   value = aws_vpc.vpc.cidr_block
 }

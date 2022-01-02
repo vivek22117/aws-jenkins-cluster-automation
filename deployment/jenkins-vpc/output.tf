@@ -34,11 +34,6 @@ output "public_rt" {
   value = module.vpc.public_rt
 }
 
-
-output "bastion_sg" {
-  value = module.vpc.bastion_sg_id
-}
-
 output "vpc_cidr" {
   value = module.vpc.vpc_cidr_block
 }
