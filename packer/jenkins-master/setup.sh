@@ -28,6 +28,7 @@ yum --showduplicates list jenkins | expand
 sudo yum install -y jenkins-2.319.1-1.1
 chkconfig jenkins on
 
+
 sleep 5
 echo "Install Telegraph"
 wget https://dl.influxdata.com/telegraf/releases/telegraf-1.6.0-1.x86_64.rpm -O /tmp/telegraf.rpm

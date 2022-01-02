@@ -9,16 +9,6 @@ echo "${efs_id}:/ /var/lib/jenkins nfs4 nfsvers=4.1,rsize=1048576,wsize=1048576,
 # Mount EFS
 mount -a -t nfs4
 
-echo "Setup SSH key"
-mkdir -p /var/lib/jenkins/.ssh
-touch /var/lib/jenkins/.ssh/known_hosts
-chown -R jenkins:jenkins /var/lib/jenkins/.ssh
-chmod 700 /var/lib/jenkins/.ssh
-cp /tmp/id_rsa /var/lib/jenkins/.ssh/id_rsa && chown jenkins:jenkins /tmp/id_rsa
-mv /tmp/id_rsa.pub /var/lib/jenkins/.ssh/id_rsa.pub
-chmod 600 /var/lib/jenkins/.ssh/id_rsa /var/lib/jenkins/.ssh/id_rsa.pub
-echo "SSH setup Completed!"
-
 sleep 10
 
 echo "Configure Jenkins"
