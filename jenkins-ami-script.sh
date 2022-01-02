@@ -61,9 +61,9 @@ function create_jenkins_master_ami() {
     if [ -z $CI_CD_AMI_ID ]; then
       echo "Creating AMI named ci-cd-node-YYYY-MM-DD using packer as it is being used for CI/CD Node"
 
-      cd packer/ci-cd-server-ami
-      packer validate server-template.json
-      packer build -var "aws_profile=default" -var "default_region=$AWS_REGION" server-template.json
+      cd packer/jenkins-master
+      packer validate jenkins-master-template.json
+      packer build -var "aws_profile=default" -var "default_region=$AWS_REGION" jenkins-master-template.json
       cd ../..
     else
       echo "AMI exits with id $CI_CD_AMI_ID"
@@ -76,7 +76,7 @@ function create_jenkins_master_ami() {
 
 if [ $EXEC_TYPE == 'create_ami' ]; then
 
-  create_ci_cd_ami
+  create_jenkins_master_ami
 
 fi
 
