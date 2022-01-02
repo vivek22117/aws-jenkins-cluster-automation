@@ -96,7 +96,7 @@ To run the terraform deployment from local we should have below installation in 
 
 * Configure IAM credentials to access AWS environment.
 * To trigger the deployment of all the TF modules, please use below script.
-    - [Local Deployment Script](local-deployment-script.sh)
+    - [Local Deployment Script](tf-backend-deployment.sh)
 * User can use below script to generate temporary credentials (Optional)
     - [Generate AWS Temporary Credentials](/assume-role-script.sh)
 * Terraform backend configuration using S3 & DynamoDB table (Optional)
