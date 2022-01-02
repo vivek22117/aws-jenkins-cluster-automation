@@ -36,15 +36,7 @@ resource "aws_iam_policy" "jenkins_access_policy" {
             ],
             "Resource": [
                 "arn:aws:ec2:${var.default_region}:${data.aws_caller_identity.current.account_id}:instance/*"
-            ],
-            "Condition": {
-                "StringLike": {
-                    "ssm:resourceTag/Project": [
-                        "DevOps-Assessment",
-                        "Terraform-Learning"
-                    ]
-                }
-            }
+            ]
         },
         {
             "Effect": "Allow",
