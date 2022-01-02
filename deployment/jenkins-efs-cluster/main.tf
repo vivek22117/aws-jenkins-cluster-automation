@@ -5,6 +5,7 @@ module "jenkins_efs_cluster" {
   source = "../../aws-jenkins-tf-modules/module.jenkins-efs-cluster"
 
   environment = var.environment
+  default_region = var.default_region
 
   efs_lifecycle    = var.efs_lifecycle
   isEncrypted      = var.isEncrypted
