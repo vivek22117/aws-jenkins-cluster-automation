@@ -7,7 +7,6 @@ variable "environment" {
 #####=====================Default Variables=====================#####
 variable "default_region" {
   type    = string
-  default = "us-east-1"
 }
 
 variable "performance_mode" {
@@ -34,7 +33,7 @@ variable "efs_lifecycle" {
 locals {
   common_tags = {
     owner       = "Vivek"
-    team        = "LearningTeam"
+    team        = "Learning-Group"
     environment = var.environment
   }
 }
