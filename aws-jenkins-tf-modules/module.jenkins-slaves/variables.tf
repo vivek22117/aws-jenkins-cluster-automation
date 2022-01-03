@@ -5,7 +5,7 @@ variable "environment" {
 }
 
 variable "component_name" {
-  type = string
+  type        = string
   description = "Component name for resources tag"
 }
 
@@ -15,7 +15,7 @@ variable "volume_size" {
 }
 
 variable "volume_type" {
-  type = string
+  type        = string
   description = "EBS volume type"
 }
 

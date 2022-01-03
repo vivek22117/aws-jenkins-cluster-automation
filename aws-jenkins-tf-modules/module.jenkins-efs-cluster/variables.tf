@@ -6,7 +6,7 @@ variable "environment" {
 
 #####=====================Default Variables=====================#####
 variable "default_region" {
-  type    = string
+  type = string
 }
 
 variable "performance_mode" {
