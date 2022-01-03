@@ -1,6 +1,12 @@
 #!/usr/bin/env bash
 
 
+
+sudo yum update -y
+sudo yum install wget unzip -y
+sleep 5
+
+
 echo "Install Java8"
 sudo yum remove -y java
 sudo amazon-linux-extras install epel -y
@@ -9,10 +15,6 @@ sudo yum install -y java-1.8.0-openjdk
 
 
 echo "Install AWS Cli & kubectl & eks & docker"
-sudo yum update -y
-sudo yum install wget unzip -y
-sleep 5
-
 curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
 unzip awscliv2.zip
 sudo  ./aws/install -i /usr/local/aws-cli -b /usr/local/bin
