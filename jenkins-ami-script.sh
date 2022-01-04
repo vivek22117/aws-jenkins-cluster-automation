@@ -90,7 +90,7 @@ if [ $EXEC_TYPE == 'destroy_ami' ]; then
   if [ ! -z $CI_CD_AMI_ID ]; then
       aws ec2 deregister-image --image-id $CI_CD_AMI_ID --region $AWS_REGION
 
-      CI_CD_SNAPSHOT=$(aws ec2 describe-snapshots --owner-ids self --filters Name=tag:Name,Values=CI-CD-Server --query "Snapshots[*].SnapshotId" --output text --region $AWS_REGION)
+      CI_CD_SNAPSHOT=$(aws ec2 describe-snapshots --owner-ids self --filters Name=tag:Name,Values=Jenkins-Master-2.x --query "Snapshots[*].SnapshotId" --output text --region $AWS_REGION)
       for ID in $CI_CD_SNAPSHOT;
         do
           aws ec2 delete-snapshot --snapshot-id $ID --region $AWS_REGION
