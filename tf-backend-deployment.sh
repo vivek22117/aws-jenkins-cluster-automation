@@ -94,7 +94,8 @@ if [ $EXEC_TYPE == 'destroy' ]; then
     echo -e "\n\n ========================= Destroying Backend TF Resources =============================="
     cd aws-jenkins-tf-backend
 
-    terraform init -reconfigure
+    terraform init
+
     terraform destroy -var-file="$ENV.tfvars" -var="default_region=$AWS_REGION" -var="environment=$ENV" -auto-approve
     cd ..
 
